@@ -73,13 +73,13 @@ export function update() {
 
   // allow add cones
   this.lastConeAddedTime = 0;
-  if (this.input.mousePointer.isDown && (currentTime() - this.lastConeAddedTime) > 0.1) {
+  if (this.input.activePointer.isDown && (currentTime() - this.lastConeAddedTime) > 0.1) {
     this.lastConeAddedTime = currentTime();
 
     // this.mouse = this.input.mousePointer;
     // input.x,input.y
     //
-    const cone = this.physics.add.image(this.input.mousePointer.x, this.input.mousePointer.y, 'cone');
+    const cone = this.physics.add.image(this.input.activePointer.x, this.input.activePointer.y, 'cone');
     cone.setDepth(9);
     cone.immovable = true;
     cone.body.moves = false;

@@ -37,7 +37,6 @@ export function create() {
   // allow the user to add cones to prevent movement
   this.conesGroup = this.add.group();
 
-
   // enable subjects to collide with cones
   this.physics.add.collider(this.subjectsGroup, this.conesGroup);
 

@@ -54,7 +54,7 @@ export function create() {
 
     // we have a match of an infected with a susceptible subject, infect
     if (infected && susceptible) {
-      susceptible.details.infected = true;
+      susceptible.details.infected = rollChance(settings.transmissionChance);
     }
 
   });

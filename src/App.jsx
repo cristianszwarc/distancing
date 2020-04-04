@@ -36,7 +36,7 @@ class App extends Component {
             <br/>
             Some will die and disappear from screen.<br/>
             <br/>
-            Your goal is to contain the outbreak by clicking and dragging with your mouse to creating barriers to prevent the movement of subjects. <br/>
+            Your goal is to contain the outbreak by clicking/touching and dragging with your mouse/finger to creating barriers to prevent the movement of subjects. <br/>
             <br/>
             Barriers must be constantly created to persuade subjects to stop moving.<br/>
             <br/>

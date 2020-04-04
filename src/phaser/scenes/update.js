@@ -9,9 +9,11 @@ export function update() {
   const thisScene = this;
   this.startTime = this.startTime ? this.startTime : currentTime();
   this.timeSinceStart = currentTime() - this.startTime;
+  const subjects = this.subjectsGroup.getChildren();
+  const deathsCount = settings.subjects - subjects.length;
+  const deathChance = settings.deathChance;
 
   // direct subjects movement and current statuses
-  const subjects = this.subjectsGroup.getChildren();
   subjects.forEach((subject) => {
 
     // track infection status
@@ -24,7 +26,7 @@ export function update() {
 
         // define if will eventually die
         // if is infected, set a death sentence
-        if (rollChance(settings.deathChance)) {
+        if (rollChance(deathChance)) {
           subject.details.dieTime = currentTime() + getRandomInt(1, settings.maxTimeToDeath);
         }
       }
@@ -42,7 +44,6 @@ export function update() {
         subject.details.infected = false;
         subject.setTint(0x3917e3);
       }
-
 
     }
 
@@ -103,7 +104,7 @@ export function update() {
   const updatedStatusText = `Total: ${subjects.length}
 Infected: ${infectedCount}
 Immune: ${immuneCount}
-Deaths: ${settings.subjects - subjects.length}
+Deaths: ${deathsCount}
 Time: ${this.timeSinceStart }
 `;
 
@@ -111,21 +112,29 @@ Time: ${this.timeSinceStart }
     this.statusText.text = updatedStatusText;
   }
 
-  // track infection over time
-  this.dataOverTime = this.dataOverTime ? this.dataOverTime : {};
+  // track infections and deaths over time
+  this.infectionsOverTime = this.infectionsOverTime ? this.infectionsOverTime : {};
+  this.deathsOverTime = this.deathsOverTime ? this.deathsOverTime : {};
 
   // if we are in a new time and the simulation is not ended, add a line to represent that last time
-  if (!this.dataOverTime[this.timeSinceStart] && !this.endText) {
-    const graphics = this.add.graphics();
-    graphics.lineStyle(2, 0xffffff, 0.4);
+  if (!this.infectionsOverTime[this.timeSinceStart] && !this.endText) {
     const currX = 50 + (this.timeSinceStart * 2);
     const baseY = settings.height - 50;
-    graphics.lineBetween(currX, baseY, currX, baseY - (infectedCount * 3));
-    graphics.setDepth(3);
+
+    const infectedGraph = this.add.graphics();
+    infectedGraph.lineStyle(2, 0xffffff, 0.4);
+    infectedGraph.lineBetween(currX, baseY, currX, baseY - (this.infectionsOverTime[this.timeSinceStart -1] * 3));
+    infectedGraph.setDepth(3);
+
+    const deathsGraph = this.add.graphics();
+    deathsGraph.lineStyle(2, 0xff0000, 0.3);
+    deathsGraph.lineBetween(currX, baseY, currX, baseY - (this.deathsOverTime[this.timeSinceStart -1] * 3));
+    deathsGraph.setDepth(4);
   }
 
   // update current state
-  this.dataOverTime[this.timeSinceStart] = infectedCount;
+  this.infectionsOverTime[this.timeSinceStart] = infectedCount;
+  this.deathsOverTime[this.timeSinceStart] = deathsCount;
 
   // show an end title
   if ((subjects.length === 0 || infectedCount === 0) && !this.endText) {

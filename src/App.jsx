@@ -23,7 +23,7 @@ class App extends Component {
           <span>
             This is a <strong>GAME</strong>, and it's simulation is ran using parameters to highlight the importance of Social Distancing. <br/>
             <strong>IS NOT</strong> a scientific representation of how viruses react in real life. <br/>
-            <a onClick={this.handleClick}>Continue</a>
+            <a onClick={this.handleClick}>Play</a>
 
           </span>
           <h3>Game</h3>
@@ -40,6 +40,8 @@ class App extends Component {
             <br/>
             Barriers must be constantly created to persuade subjects to stop moving.<br/>
             <br/>
+            <a onClick={this.handleClick}>Play</a> <br/>
+             <br/>
           </span>
         </div>
       );

@@ -22,10 +22,8 @@ export function create() {
     subject.setCollideWorldBounds(true);
     subject.setDepth(10);
     thisScene.subjectsGroup.add(subject);
-
-    // set this subject as infected given the start chances
     subject.details = {
-      infected: rollChance(settings.initialInfectionChance),
+      infected: false,
     };
   }
 

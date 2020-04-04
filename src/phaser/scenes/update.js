@@ -12,6 +12,7 @@ export function update() {
   const subjects = this.subjectsGroup.getChildren();
   const deathsCount = settings.subjects - subjects.length;
   const infectedCount = subjects.filter(b => b.details.infected).length;
+  const usingIcu = subjects.filter(b => b.details.icu).length;
 
   // direct subjects movement and current statuses
   subjects.forEach((subject) => {
@@ -24,13 +25,15 @@ export function update() {
         // ensure we have an infection time
         subject.details.infectedTime = currentTime();
 
-        // death chance also depends on stress of the system
-        const deathChance = settings.deathChance * ((50 + infectedCount - settings.icu) / 50);
+        // define if this subject requires icu
+        subject.details.icu = rollChance(settings.icuChance);
 
-        // define if will eventually die
-        // if is infected, set a death sentence
+        // define death chance
+        const deathChance = subject.details.icu && usingIcu >= settings.availableIcu ? settings.deathChanceWithoutIcu : settings.deathChance;
+
+        // define if will eventually die given the death chances at this time
         if (rollChance(deathChance)) {
-          subject.details.dieTime = currentTime() + getRandomInt(2, settings.maxTimeToDeath);
+          subject.details.dieTime = currentTime() + getRandomInt(parseInt(settings.maxTimeToDeath / 2), settings.maxTimeToDeath);
         }
       }
 

@@ -3,15 +3,15 @@ import screenSize from '../utils/screenSize';
 export default {
   subjects: 100,
   subjectsMovementRate: 20,
-  initialInfectionChance: 3,
-  transmissionChance: 50,
+  transmissionChance: 60,
 
   showSymptomsTime: 5,
   cureTime: 13,
 
-  icu: 10,
-
-  deathChance: 10,
+  availableIcu: 5,
+  icuChance: 15,
+  deathChance: 3,
+  deathChanceWithoutIcu: 80,
   maxTimeToDeath: 8,
 
   coneDestroyTime: 8,

@@ -1,0 +1,6 @@
+# package directories
+node_modules
+
+# custom
+.idea
+.DS_Store
